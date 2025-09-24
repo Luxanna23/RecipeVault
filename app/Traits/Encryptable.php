@@ -1,43 +1,47 @@
 <?php
 
 namespace App\Traits;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Crypt;
 
 trait Encryptable
 {
-    /**
-     * Liste des champs à crypter/décrypter automatiquement.
-     *
-     * @var array
-     */
-    protected $encryptable = [];
 
-    /**
-     * Surcharge du setter d'attributs pour crypter avant sauvegarde.
-     */
-    public function setAttribute($key, $value)
+    public static function bootEncryptable(): void
     {
-        if (in_array($key, $this->encryptable) && !is_null($value)) {
-            $value = encrypt($value);
-        }
-
-        return parent::setAttribute($key, $value);
-    }
-
-    /**
-     * Surcharge du getter d'attributs pour décrypter à la lecture.
-     */
-    public function getAttribute($key)
-    {
-        $value = parent::getAttribute($key);
-
-        if (in_array($key, $this->encryptable) && !is_null($value)) {
-            try {
-                return decrypt($value);
-            } catch (\Exception $e) {
-                return $value;
+        // pour tout ce qui est select de la base
+        static::retrieved(function (Model $model) {
+            if (!property_exists($model, 'encryptable')) {
+                return;
             }
-        }
 
-        return $value;
+            foreach ($model->encryptable as $key) {
+
+                $raw = $model->getRawOriginal($key);
+
+                try {
+                    $model->attributes[$key] = Crypt::decryptString($raw);
+                } catch (\Throwable $e) {
+                }
+
+
+            }
+        });
+
+        // pour tout ce qui est create et update
+        static::saving(function (Model $model) {
+            if (!property_exists($model, 'encryptable')) {
+                return;
+            }
+
+            foreach ($model->encryptable as $key) {
+                $plain = $model->attributes[$key] ?? null;
+
+                $model->attributes[$key] = Crypt::encryptString($plain);
+            }
+        });
     }
+
+
 }

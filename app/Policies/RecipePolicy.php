@@ -29,7 +29,6 @@ class RecipePolicy
      */
     public function create(User $user): bool
     {
-        dd('ok');
         return true;
     }
 
