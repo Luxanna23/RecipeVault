@@ -6,6 +6,9 @@ use Lomkit\Rest\Http\Resource;
 use App\Models\RecipeImage;
 use Lomkit\Rest\Relations\BelongsTo;
 use \Lomkit\Rest\Http\Requests\RestRequest;
+use Lomkit\Rest\Fields\ID;
+use Lomkit\Rest\Fields\Text;
+
 
 class RecipeImageResource extends Resource
 {

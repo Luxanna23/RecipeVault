@@ -22,7 +22,7 @@ class RecipeImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'images' => ['array|max:10'],
+            'images' => ['array','max:10'],
             'images.*' => ['file','mimes:jpeg,png,jpg,webp'],
         ];
     }

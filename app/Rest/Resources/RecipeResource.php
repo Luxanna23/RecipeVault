@@ -102,4 +102,5 @@ class RecipeResource extends Resource
             'description' => ['string','max:2000'],
         ];
     }
+
 }
