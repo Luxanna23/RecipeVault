@@ -27,7 +27,7 @@ class RecipeImageResource extends Resource
     public function fields(\Lomkit\Rest\Http\Requests\RestRequest $request): array
     {
         return [
-            'id', 'recipe_id', 'image_path'
+            'id', 'recipe_id', 'image_path', 'url'
         ];
     }
 

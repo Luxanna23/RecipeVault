@@ -4,10 +4,11 @@ namespace App\Models;
 
 use App\Traits\Encryptable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Recipe extends Model
 {
-    use Encryptable;
+    use Encryptable, HasFactory;
 
     protected $fillable = [
         'name',

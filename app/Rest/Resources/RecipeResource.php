@@ -90,7 +90,7 @@ class RecipeResource extends Resource
     {
         return [
             'name'        => ['required','string','max:255'],
-            'description' => ['string','max:2000'],
+            'description' => ['required','string','max:2048'],
             'user_id'     => ['required','exists:users,id'],
         ];
     }

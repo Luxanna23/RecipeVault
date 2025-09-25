@@ -14,7 +14,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 //les upload d'images sont pas en restapi 
 Route::post('/recipes/{recipe}/images', [RecipeImageHTTPController::class, 'store'])
-    ->middleware('auth:sanctum');
+    ->middleware(['auth:sanctum','permission:create dishes']);
 
 
 Route::get('/user', function (Request $request) {

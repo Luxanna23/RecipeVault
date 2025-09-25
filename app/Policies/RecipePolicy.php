@@ -29,7 +29,7 @@ class RecipePolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->can('create dishes');
     }
 
     /**
@@ -37,7 +37,7 @@ class RecipePolicy
      */
     public function update(User $user, Recipe $recipe): bool
     {
-        return true;
+        return $user->can('update dishes');
     }
 
     /**
@@ -45,7 +45,7 @@ class RecipePolicy
      */
     public function delete(User $user, Recipe $recipe): bool
     {
-        return true;
+        return $user->can('delete dishes');
     }
 
     /**

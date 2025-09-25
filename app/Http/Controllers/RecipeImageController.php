@@ -20,7 +20,7 @@ class RecipeImageController extends Controller
 
         $recipe = $this->recipeService->store($recipe, $images);
 
-        return response()->json($recipe, 201); 
+        return response()->json($recipe->load('images')); 
     }
 
 }
