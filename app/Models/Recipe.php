@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\Traits\Encryptable;
+use App\Traits\RecipeNotifications;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Crypt;
+use Laravel\Scout\Searchable;
 
 class Recipe extends Model
 {
-    use Encryptable, HasFactory;
+    use Encryptable, HasFactory, RecipeNotifications, Searchable;
 
     protected $fillable = [
         'name',
@@ -35,4 +38,21 @@ class Recipe extends Model
         return $this->belongsToMany(User::class, 'favorite_recipes');
     }
 
+
+    public function searchableAs(): string
+    {
+        return 'recipes';
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id'          => $this->id,
+            'name'        => $this->name,
+            'description' => $this->decryptIfNeededForSearch($this->description),
+            'user_id'     => $this->user_id,
+            'created_at'  => $this->created_at->timestamp,
+        ];
+    }
+    
 }

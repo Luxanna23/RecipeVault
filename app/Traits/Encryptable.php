@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Traits;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
 
@@ -10,7 +9,7 @@ trait Encryptable
 
     public static function bootEncryptable(): void
     {
-        // pour tout ce qui est select de la base
+        //DB select
         static::retrieved(function (Model $model) {
             if (!property_exists($model, 'encryptable')) {
                 return;
@@ -20,16 +19,11 @@ trait Encryptable
 
                 $raw = $model->getRawOriginal($key);
 
-                try {
-                    $model->attributes[$key] = Crypt::decryptString($raw);
-                } catch (\Throwable $e) {
-                }
-
-
+                $model->attributes[$key] = Crypt::decryptString($raw);
             }
         });
 
-        // pour tout ce qui est create et update
+        //create et update
         static::saving(function (Model $model) {
             if (!property_exists($model, 'encryptable')) {
                 return;
@@ -43,5 +37,13 @@ trait Encryptable
         });
     }
 
+
+    public function decryptIfNeededForSearch(?string $value): ?string
+    {
+        if (!is_string($value) || $value === '') return $value;
+        try { 
+            return Crypt::decryptString($value); }
+        catch (\Throwable $e) { return $value; } 
+    }
 
 }

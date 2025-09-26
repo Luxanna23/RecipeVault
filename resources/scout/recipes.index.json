@@ -1,0 +1,6 @@
+{
+  "searchableAttributes": ["name", "description"],
+  "filterableAttributes": ["user_id", "created_at"],
+  "sortableAttributes": ["created_at"],
+  "typoTolerance": { "enabled": true }
+}
