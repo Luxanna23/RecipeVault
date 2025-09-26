@@ -21,9 +21,5 @@ class PermissionSeeder extends Seeder
 
         $admin = Role::firstOrCreate(['name' => 'Admin']);
         $admin->givePermissionTo([$create, $update, $delete]);
-
-        if ($user = User::where('email', 'admin@gmail.com')->first()) {
-            $user->assignRole('Admin');
-        }
     }
 }

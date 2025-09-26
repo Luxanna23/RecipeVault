@@ -36,6 +36,7 @@ class RecipeNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
+        // Tips : trad 
             ->subject('Votre recette est en ligne !')
             ->greeting('Bonjour ' . $notifiable->name)
             ->line('Votre recette '. $this->recipe->name .' a été publiée en ligne.')

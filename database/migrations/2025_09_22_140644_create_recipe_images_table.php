@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //Test avec Spatie Laravel Media Library une prochaine fois
         Schema::create('recipe_images', function (Blueprint $table) {
             $table->id();
             $table->foreignId('recipe_id')->constrained()->onDelete('cascade');

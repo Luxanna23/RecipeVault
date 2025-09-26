@@ -9,7 +9,7 @@ trait Encryptable
 
     public static function bootEncryptable(): void
     {
-        //DB select
+        //les select
         static::retrieved(function (Model $model) {
             if (!property_exists($model, 'encryptable')) {
                 return;
@@ -35,15 +35,6 @@ trait Encryptable
                 $model->attributes[$key] = Crypt::encryptString($plain);
             }
         });
-    }
-
-
-    public function decryptIfNeededForSearch(?string $value): ?string
-    {
-        if (!is_string($value) || $value === '') return $value;
-        try { 
-            return Crypt::decryptString($value); }
-        catch (\Throwable $e) { return $value; } 
     }
 
 }

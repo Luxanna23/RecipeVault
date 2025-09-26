@@ -19,12 +19,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         //
     }
-    
-    protected $policies = [
-        User::class   => UserPolicy::class,
-        Recipe::class => RecipePolicy::class,
-        RecipeImage::class => RecipeImagePolicy::class,
-    ];
 
     /**
      * Bootstrap services.

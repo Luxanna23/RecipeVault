@@ -5,6 +5,8 @@ namespace App\Rest\Resources;
 use App\Rest\Resources\Resource;
 use App\Models\User;
 use Lomkit\Rest\Http\Requests\RestRequest;
+use Lomkit\Rest\Relations\BelongsToMany;
+use Lomkit\Rest\Relations\HasMany;
 
 class UserResource extends Resource
 {

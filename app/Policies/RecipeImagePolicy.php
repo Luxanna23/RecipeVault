@@ -4,10 +4,17 @@ namespace App\Policies;
 
 use App\Models\RecipeImage;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class RecipeImagePolicy
 {
+    //before ça donne tout les droits a un user
+    public function before(User $user, string $ability)
+    {
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can view any models.
      */
@@ -29,7 +36,7 @@ class RecipeImagePolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->can('update dishes');
     }
 
     /**
@@ -37,7 +44,7 @@ class RecipeImagePolicy
      */
     public function update(User $user, RecipeImage $recipeImage): bool
     {
-        return true;
+        return $user->can('update', $recipeImage->recipe);
     }
 
     /**
@@ -45,7 +52,7 @@ class RecipeImagePolicy
      */
     public function delete(User $user, RecipeImage $recipeImage): bool
     {
-        return true;
+        return $user->can('delete', $recipeImage->recipe);
     }
 
     /**
@@ -53,7 +60,7 @@ class RecipeImagePolicy
      */
     public function restore(User $user, RecipeImage $recipeImage): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -61,6 +68,6 @@ class RecipeImagePolicy
      */
     public function forceDelete(User $user, RecipeImage $recipeImage): bool
     {
-        return true;
+        return false;
     }
 }

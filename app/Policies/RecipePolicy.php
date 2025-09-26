@@ -8,6 +8,14 @@ use Illuminate\Auth\Access\Response;
 
 class RecipePolicy
 {
+    //before ça donne tout les droits a un user
+    public function before(User $user, string $ability)
+    {
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can view any models.
      */
@@ -37,6 +45,7 @@ class RecipePolicy
      */
     public function update(User $user, Recipe $recipe): bool
     {
+        //return $user->can('update dishes') || $recipe->user_id === $user->id ;
         return $user->can('update dishes');
     }
 
@@ -53,7 +62,7 @@ class RecipePolicy
      */
     public function restore(User $user, Recipe $recipe): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -61,6 +70,6 @@ class RecipePolicy
      */
     public function forceDelete(User $user, Recipe $recipe): bool
     {
-        return true;
+        return false;
     }
 }
