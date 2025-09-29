@@ -7,14 +7,6 @@ use App\Models\User;
 
 class RecipeImagePolicy
 {
-    //before ça donne tout les droits a un user
-    public function before(User $user, string $ability)
-    {
-        if ($user->hasRole('admin')) {
-            return true;
-        }
-    }
-
     /**
      * Determine whether the user can view any models.
      */

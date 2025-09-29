@@ -11,10 +11,7 @@ trait Encryptable
     {
         //les select
         static::retrieved(function (Model $model) {
-            if (!property_exists($model, 'encryptable')) {
-                return;
-            }
-
+            
             foreach ($model->encryptable as $key) {
 
                 $raw = $model->getRawOriginal($key);
@@ -25,11 +22,8 @@ trait Encryptable
 
         //create et update
         static::saving(function (Model $model) {
-            if (!property_exists($model, 'encryptable')) {
-                return;
-            }
-
-            foreach ($model->encryptable as $key) {
+         
+            foreach ($model->encryptable ?? [] as $key) {
                 $plain = $model->attributes[$key] ?? null;
 
                 $model->attributes[$key] = Crypt::encryptString($plain);
